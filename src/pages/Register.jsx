@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert, Card, Container, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -25,7 +24,6 @@ const Register = () => {
         e.preventDefault();
         setError('');
 
-        // Validation
         if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
             setError('Please fill in all fields');
             return;
@@ -57,86 +55,96 @@ const Register = () => {
     };
 
     return (
-        <Container>
-            <Row className="justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
-                <Col md={8} lg={6} xl={5}>
-                    <Card className="glass-card border-0 p-3">
-                        <Card.Body>
-                            <div className="text-center mb-4">
-                                <h2 className="fw-bold text-primary">Create Account</h2>
-                                <p className="text-muted">Join us to manage your profile</p>
-                            </div>
+        <div className="min-h-[80vh] flex items-center justify-center p-4">
+            <div className="glass-card w-full max-w-lg p-8 md:p-10">
+                <div className="text-center mb-8">
+                    <h2 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h2>
+                    <p className="text-gray-500">Join us to manage your profile</p>
+                </div>
 
-                            {error && <Alert variant="danger" dismissible onClose={() => setError('')}>{error}</Alert>}
+                {error && (
+                    <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded text-red-700">
+                        <p className="text-sm font-medium">{error}</p>
+                    </div>
+                )}
 
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group className="mb-3" controlId="name">
-                                    <Form.Label>Full Name</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="name"
-                                        placeholder="John Doe"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </Form.Group>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
+                            Full Name
+                        </label>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            placeholder="John Doe"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className="form-input"
+                            required
+                        />
+                    </div>
 
-                                <Form.Group className="mb-3" controlId="email">
-                                    <Form.Label>Email address</Form.Label>
-                                    <Form.Control
-                                        type="email"
-                                        name="email"
-                                        placeholder="name@example.com"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </Form.Group>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
+                            Email address
+                        </label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            placeholder="name@example.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="form-input"
+                            required
+                        />
+                    </div>
 
-                                <Row>
-                                    <Col md={6}>
-                                        <Form.Group className="mb-3" controlId="password">
-                                            <Form.Label>Password</Form.Label>
-                                            <Form.Control
-                                                type="password"
-                                                name="password"
-                                                placeholder="Min 6 chars"
-                                                value={formData.password}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md={6}>
-                                        <Form.Group className="mb-4" controlId="confirmPassword">
-                                            <Form.Label>Confirm Password</Form.Label>
-                                            <Form.Control
-                                                type="password"
-                                                name="confirmPassword"
-                                                placeholder="Re-enter password"
-                                                value={formData.confirmPassword}
-                                                onChange={handleChange}
-                                                required
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Min 6 chars"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="form-input"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="confirmPassword">
+                                Confirm Password
+                            </label>
+                            <input
+                                id="confirmPassword"
+                                type="password"
+                                name="confirmPassword"
+                                placeholder="Re-enter password"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                className="form-input"
+                                required
+                            />
+                        </div>
+                    </div>
 
-                                <Button variant="primary" type="submit" className="btn-primary-custom w-100 mb-3 text-white">
-                                    Create Account
-                                </Button>
-                            </Form>
+                    <button type="submit" className="btn-primary-custom w-full mt-4 shadow-lg shadow-primary/30">
+                        Create Account
+                    </button>
+                </form>
 
-                            <div className="text-center mt-3">
-                                <span className="text-muted">Already have an account? </span>
-                                <Link to="/login" className="text-primary text-decoration-none fw-bold">Log in</Link>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+                <div className="text-center mt-6 text-sm">
+                    <span className="text-gray-500">Already have an account? </span>
+                    <Link to="/login" className="text-primary font-bold hover:underline">Log in</Link>
+                </div>
+            </div>
+        </div>
     );
 };
 
