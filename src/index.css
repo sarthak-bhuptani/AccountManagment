@@ -65,6 +65,7 @@ code {
   transition: color 0.2s;
 }
 
-.nav-link-custom:hover, .nav-link-custom.active {
+.nav-link-custom:hover,
+.nav-link-custom.active {
   color: var(--primary-color);
 }

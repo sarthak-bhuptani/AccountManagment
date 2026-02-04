@@ -1,12 +1,12 @@
 # React Account Manager
 
-A simple React application for user account management, built for the React Interns Interview practical.
+A premium React application for user account management, built for the React Interns Interview practical.
 
 ## Features
 
 - **User Authentication**: Login and Registration pages (simulated with LocalStorage).
 - **Profile Management**: View and Edit user details (Name, Bio, Phone).
-- **Response Design**: Built with Bootstrap 5 and custom CSS for a premium look.
+- **Modern UI/UX**: Built with **Tailwind CSS** featuring Glassmorphism, responsive design, and smooth transitions.
 - **State Management**: Uses React Context API.
 
 ## Project Structure
@@ -32,11 +32,11 @@ A simple React application for user account management, built for the React Inte
 
 - React 18
 - Vite
-- Bootstrap 5
+- **Tailwind CSS** (Replaced Bootstrap for custom styling)
 - React Router Dom
 - LocalStorage for data persistence
 
 ## Notes
 
 - This app uses `localStorage` to simulate a backend database. Clearing your browser cache will remove all registered users.
-- Design is kept clean simple yet aesthetic using glassmorphism effects.
+- Design focuses on a clean, modern aesthetic with glassmorphism effects and Inter typography.
