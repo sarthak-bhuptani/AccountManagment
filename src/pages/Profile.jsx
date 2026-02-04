@@ -8,6 +8,7 @@ const Profile = () => {
         name: '',
         email: '',
         phone: '',
+        jobTitle: '',
         bio: ''
     });
     const [isEditing, setIsEditing] = useState(false);
@@ -20,6 +21,7 @@ const Profile = () => {
                 name: user.name || '',
                 email: user.email || '',
                 phone: user.phone || '',
+                jobTitle: user.jobTitle || '',
                 bio: user.bio || ''
             });
         }
@@ -112,16 +114,32 @@ const Profile = () => {
                                         </Col>
                                     </Row>
 
-                                    <Form.Group className="mb-3" controlId="phone">
-                                        <Form.Label>Phone Number (Optional)</Form.Label>
-                                        <Form.Control
-                                            type="tel"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            placeholder="+1 234 567 8900"
-                                        />
-                                    </Form.Group>
+                                    <Row>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3" controlId="phone">
+                                                <Form.Label>Phone Number (Optional)</Form.Label>
+                                                <Form.Control
+                                                    type="tel"
+                                                    name="phone"
+                                                    value={formData.phone}
+                                                    onChange={handleChange}
+                                                    placeholder="+1 234 567 8900"
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3" controlId="jobTitle">
+                                                <Form.Label>Job Title</Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    name="jobTitle"
+                                                    value={formData.jobTitle}
+                                                    onChange={handleChange}
+                                                    placeholder="Software Engineer"
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
 
                                     <Form.Group className="mb-4" controlId="bio">
                                         <Form.Label>Bio</Form.Label>
@@ -157,6 +175,10 @@ const Profile = () => {
                                     <Row className="mb-4 align-items-center">
                                         <Col sm={4} className="text-muted">Phone</Col>
                                         <Col sm={8} className="text-dark">{user.phone || <span className="text-muted fst-italic">Not provided</span>}</Col>
+                                    </Row>
+                                    <Row className="mb-4 align-items-center">
+                                        <Col sm={4} className="text-muted">Job Title</Col>
+                                        <Col sm={8} className="text-dark">{user.jobTitle || <span className="text-muted fst-italic">Not provided</span>}</Col>
                                     </Row>
                                     <Row className="mb-4">
                                         <Col sm={4} className="text-muted">Bio</Col>

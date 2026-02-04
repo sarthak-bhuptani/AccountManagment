@@ -8,7 +8,9 @@ const Register = () => {
         name: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        phone: '',
+        jobTitle: ''
     });
     const [error, setError] = useState('');
     const { register } = useAuth();
@@ -46,7 +48,8 @@ const Register = () => {
             email: formData.email,
             password: formData.password,
             bio: '',
-            phone: ''
+            phone: formData.phone,
+            jobTitle: formData.jobTitle
         });
 
         if (res.success) {
@@ -93,6 +96,33 @@ const Register = () => {
                                         required
                                     />
                                 </Form.Group>
+
+                                <Row>
+                                    <Col md={6}>
+                                        <Form.Group className="mb-3" controlId="phone">
+                                            <Form.Label>Phone Number</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="phone"
+                                                placeholder="+1 234 567 890"
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md={6}>
+                                        <Form.Group className="mb-3" controlId="jobTitle">
+                                            <Form.Label>Job Title</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="jobTitle"
+                                                placeholder="Software Engineer"
+                                                value={formData.jobTitle}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
 
                                 <Row>
                                     <Col md={6}>
