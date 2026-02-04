@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Form, Button, Alert, Card, Container, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -27,61 +28,55 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-[80vh] flex items-center justify-center p-4">
-            <div className="glass-card w-full max-w-md p-8 md:p-10">
-                <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
-                    <p className="text-gray-500">Login to manage your account</p>
-                </div>
+        <Container>
+            <Row className="justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+                <Col md={7} lg={5} xl={4}>
+                    <Card className="glass-card border-0 p-3">
+                        <Card.Body>
+                            <div className="text-center mb-4">
+                                <h2 className="fw-bold text-primary">Welcome Back</h2>
+                                <p className="text-muted">Login to manage your account</p>
+                            </div>
 
-                {error && (
-                    <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded text-red-700">
-                        <p className="text-sm font-medium">{error}</p>
-                    </div>
-                )}
+                            {error && <Alert variant="danger" dismissible onClose={() => setError('')}>{error}</Alert>}
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="email">
-                            Email address
-                        </label>
-                        <input
-                            id="email"
-                            type="email"
-                            placeholder="name@example.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="form-input"
-                            required
-                        />
-                    </div>
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group className="mb-3" controlId="email">
+                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="name@example.com"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                </Form.Group>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="password">
-                            Password
-                        </label>
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="form-input"
-                            required
-                        />
-                    </div>
+                                <Form.Group className="mb-4" controlId="password">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Enter your password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                    />
+                                </Form.Group>
 
-                    <button type="submit" className="btn-primary-custom w-full shadow-lg shadow-primary/30">
-                        Log In
-                    </button>
-                </form>
+                                <Button variant="primary" type="submit" className="btn-primary-custom w-100 mb-3 text-white">
+                                    Log In
+                                </Button>
+                            </Form>
 
-                <div className="text-center mt-6 text-sm">
-                    <span className="text-gray-500">Don't have an account? </span>
-                    <Link to="/register" className="text-primary font-bold hover:underline">Sign up</Link>
-                </div>
-            </div>
-        </div>
+                            <div className="text-center mt-3">
+                                <span className="text-muted">Don't have an account? </span>
+                                <Link to="/register" className="text-primary text-decoration-none fw-bold">Sign up</Link>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

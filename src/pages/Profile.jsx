@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Form, Button, Alert, Card, Container, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 
 const Profile = () => {
@@ -7,6 +8,7 @@ const Profile = () => {
         name: '',
         email: '',
         phone: '',
+        jobTitle: '',
         bio: ''
     });
     const [isEditing, setIsEditing] = useState(false);
@@ -19,6 +21,7 @@ const Profile = () => {
                 name: user.name || '',
                 email: user.email || '',
                 phone: user.phone || '',
+                jobTitle: user.jobTitle || '',
                 bio: user.bio || ''
             });
         }
@@ -52,155 +55,147 @@ const Profile = () => {
 
     if (!user) {
         return (
-            <div className="mt-10 px-4 text-center">
-                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 inline-block rounded" role="alert">
-                    <p>Please log in to view this page.</p>
-                </div>
-            </div>
+            <Container className="mt-5 text-center">
+                <Alert variant="warning">Please log in to view this page.</Alert>
+            </Container>
         );
     }
 
     return (
-        <div className="py-10 px-4 max-w-4xl mx-auto">
-            <div className="glass-card p-6 md:p-10">
-                <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-6">
-                    <h2 className="text-3xl font-bold text-gray-800">My Profile</h2>
-                    {!isEditing && (
-                        <button
-                            onClick={() => setIsEditing(true)}
-                            className="px-6 py-2 border-2 border-primary text-primary font-medium rounded-full hover:bg-primary hover:text-white transition-colors duration-200"
-                        >
-                            Edit Profile
-                        </button>
-                    )}
-                </div>
-
-                {error && (
-                    <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded text-red-700">
-                        {error}
-                    </div>
-                )}
-
-                {success && (
-                    <div className="mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded text-green-700">
-                        {success}
-                    </div>
-                )}
-
-                {isEditing ? (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
-                                    Full Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    className="form-input"
-                                    required
-                                />
+        <Container className="py-5">
+            <Row className="justify-content-center">
+                <Col md={10} lg={8}>
+                    <Card className="glass-card border-0 p-4">
+                        <Card.Body>
+                            <div className="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+                                <h2 className="fw-bold text-primary m-0">My Profile</h2>
+                                {!isEditing && (
+                                    <Button
+                                        variant="outline-primary"
+                                        onClick={() => setIsEditing(true)}
+                                        className="rounded-pill px-4"
+                                    >
+                                        Edit Profile
+                                    </Button>
+                                )}
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    value={formData.email}
-                                    className="form-input bg-gray-100 cursor-not-allowed opacity-75"
-                                    disabled
-                                    title="Contact support to change email"
-                                />
-                                <p className="mt-1 text-xs text-gray-500">Email cannot be changed.</p>
-                            </div>
-                        </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="phone">
-                                Phone Number (Optional)
-                            </label>
-                            <input
-                                type="tel"
-                                name="phone"
-                                id="phone"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                placeholder="+1 234 567 8900"
-                                className="form-input"
-                            />
-                        </div>
+                            {error && <Alert variant="danger" dismissible onClose={() => setError('')}>{error}</Alert>}
+                            {success && <Alert variant="success" dismissible onClose={() => setSuccess('')}>{success}</Alert>}
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="bio">
-                                Bio
-                            </label>
-                            <textarea
-                                rows={3}
-                                name="bio"
-                                id="bio"
-                                value={formData.bio}
-                                onChange={handleChange}
-                                placeholder="Tell us about yourself..."
-                                className="form-input resize-y"
-                            />
-                        </div>
+                            {isEditing ? (
+                                <Form onSubmit={handleSubmit}>
+                                    <Row>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3" controlId="name">
+                                                <Form.Label>Full Name</Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    name="name"
+                                                    value={formData.name}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3" controlId="email">
+                                                <Form.Label>Email</Form.Label>
+                                                <Form.Control
+                                                    type="email"
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                    disabled
+                                                    title="Contact support to change email"
+                                                />
+                                                <Form.Text className="text-muted">Email cannot be changed.</Form.Text>
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
 
-                        <div className="flex gap-4 justify-end pt-4">
-                            <button
-                                type="button"
-                                onClick={() => { setIsEditing(false); setSuccess(''); setError(''); }}
-                                className="px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                className="btn-primary-custom"
-                            >
-                                Save Changes
-                            </button>
-                        </div>
-                    </form>
-                ) : (
-                    <div className="space-y-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-gray-50 pb-4">
-                            <div className="text-gray-500 font-medium">Full Name</div>
-                            <div className="sm:col-span-2 font-semibold text-xl text-gray-900">{user.name}</div>
-                        </div>
+                                    <Row>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3" controlId="phone">
+                                                <Form.Label>Phone Number (Optional)</Form.Label>
+                                                <Form.Control
+                                                    type="tel"
+                                                    name="phone"
+                                                    value={formData.phone}
+                                                    onChange={handleChange}
+                                                    placeholder="+1 234 567 8900"
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                        <Col md={6}>
+                                            <Form.Group className="mb-3" controlId="jobTitle">
+                                                <Form.Label>Job Title</Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    name="jobTitle"
+                                                    value={formData.jobTitle}
+                                                    onChange={handleChange}
+                                                    placeholder="Software Engineer"
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-gray-50 pb-4">
-                            <div className="text-gray-500 font-medium">Email</div>
-                            <div className="sm:col-span-2 text-gray-900">{user.email}</div>
-                        </div>
+                                    <Form.Group className="mb-4" controlId="bio">
+                                        <Form.Label>Bio</Form.Label>
+                                        <Form.Control
+                                            as="textarea"
+                                            rows={3}
+                                            name="bio"
+                                            value={formData.bio}
+                                            onChange={handleChange}
+                                            placeholder="Tell us about yourself..."
+                                        />
+                                    </Form.Group>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-gray-50 pb-4">
-                            <div className="text-gray-500 font-medium">Phone</div>
-                            <div className="sm:col-span-2 text-gray-900">
-                                {user.phone ? user.phone : <span className="text-gray-400 italic">Not provided</span>}
-                            </div>
-                        </div>
+                                    <div className="d-flex gap-2 justify-content-end">
+                                        <Button variant="secondary" onClick={() => { setIsEditing(false); setSuccess(''); setError(''); }}>
+                                            Cancel
+                                        </Button>
+                                        <Button variant="primary" type="submit" className="btn-primary-custom text-white">
+                                            Save Changes
+                                        </Button>
+                                    </div>
+                                </Form>
+                            ) : (
+                                <div className="profile-view">
+                                    <Row className="mb-4 align-items-center">
+                                        <Col sm={4} className="text-muted">Full Name</Col>
+                                        <Col sm={8} className="fw-semibold fs-5 text-dark">{user.name}</Col>
+                                    </Row>
+                                    <Row className="mb-4 align-items-center">
+                                        <Col sm={4} className="text-muted">Email</Col>
+                                        <Col sm={8} className="fw-medium text-dark">{user.email}</Col>
+                                    </Row>
+                                    <Row className="mb-4 align-items-center">
+                                        <Col sm={4} className="text-muted">Phone</Col>
+                                        <Col sm={8} className="text-dark">{user.phone || <span className="text-muted fst-italic">Not provided</span>}</Col>
+                                    </Row>
+                                    <Row className="mb-4 align-items-center">
+                                        <Col sm={4} className="text-muted">Job Title</Col>
+                                        <Col sm={8} className="text-dark">{user.jobTitle || <span className="text-muted fst-italic">Not provided</span>}</Col>
+                                    </Row>
+                                    <Row className="mb-4">
+                                        <Col sm={4} className="text-muted">Bio</Col>
+                                        <Col sm={8} className="text-dark">{user.bio || <span className="text-muted fst-italic">No bio yet...</span>}</Col>
+                                    </Row>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div className="text-gray-500 font-medium">Bio</div>
-                            <div className="sm:col-span-2 text-gray-700 leading-relaxed">
-                                {user.bio ? user.bio : <span className="text-gray-400 italic">No bio yet...</span>}
-                            </div>
-                        </div>
-
-                        <div className="mt-8 bg-gray-50/50 p-4 rounded-xl border border-gray-100">
-                            <span className="text-xs text-uppercase text-gray-400 font-bold tracking-wider block mb-1">ACCOUNT ID</span>
-                            <code className="text-sm text-primary bg-indigo-50 px-2 py-1 rounded">{user.id}</code>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </div>
+                                    <div className="bg-white p-3 rounded-3 mt-4 shadow-sm border">
+                                        <small className="text-muted d-block mb-1">Account ID</small>
+                                        <code className="text-primary">{user.id}</code>
+                                    </div>
+                                </div>
+                            )}
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

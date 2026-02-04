@@ -1,15 +1,16 @@
 import React from 'react';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navigation from './components/Navigation';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-primary">Loading...</div>;
+  if (loading) return <div className="p-5 text-center">Loading...</div>;
   if (!user) return <Navigate to="/login" />;
   return children;
 };
@@ -18,48 +19,32 @@ const ProtectedRoute = ({ children }) => {
 const Home = () => {
   const { user } = useAuth();
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 text-center">
-      <div className="max-w-3xl">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900 tracking-tight">
-          React Account<span className="text-primary block md:inline"> Manager</span>
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-          A simple, secure, and aesthetic way to manage your user profile.
-          Built with React 18, Vite, and <span className="text-secondary font-semibold">Tailwind CSS</span>.
-        </p>
-
-        {!user ? (
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/login"
-              className="btn-primary-custom text-lg px-8 py-3 shadow-xl"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="px-8 py-3 bg-white text-gray-800 font-medium rounded-lg border border-gray-200 hover:bg-gray-50 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
-            >
-              Register
-            </Link>
-          </div>
-        ) : (
-          <Link
-            to="/profile"
-            className="btn-primary-custom text-lg px-8 py-3 shadow-xl"
-          >
-            Go to Profile
-          </Link>
-        )}
-      </div>
-    </div>
+    <Container className="mt-5 pt-5">
+      <Row className="justify-content-center">
+        <Col md={8} className="text-center">
+          <h1 className="display-4 fw-bold text-primary mb-4">React Account Manager</h1>
+          <p className="lead text-muted mb-5">
+            A simple, secure, and clear way to manage your user profile and account details.
+            Built with React V16+ and Bootstrap 5.
+          </p>
+          {!user ? (
+            <div className="d-flex gap-3 justify-content-center">
+              <Button href="/login" variant="primary" size="lg" className="btn-primary-custom text-white px-5 shadow">Login</Button>
+              <Button href="/register" variant="outline-primary" size="lg" className="px-5 rounded-pill shadow-sm bg-white">Register</Button>
+            </div>
+          ) : (
+            <Button href="/profile" variant="primary" size="lg" className="btn-primary-custom text-white px-5 shadow">Go to Profile</Button>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
 const App = () => {
   return (
     <AuthProvider>
-      <div className="antialiased text-gray-900">
+      <div className="app-container">
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
